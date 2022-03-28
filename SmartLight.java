@@ -6,7 +6,8 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
     private boolean programAction;
 
     public SmartLight(String alias, String macId) {
-
+        setAlias(alias);
+        setMacId(macId);
     }
 
     public boolean getHasLightTurned() {
@@ -34,15 +35,19 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
     }
 
     public void turnOnLight() {
-
+        if (controlConnection()) {
+            setHasLightTurned(true);
+        }
     }
 
     public void turnOffLight() {
-
+        if (!controlConnection()) {
+            setHasLightTurned(false);
+        }
     }
 
     public boolean testObject() {
-
+        
     }
 
     public boolean shutDownObject() {

@@ -6,7 +6,8 @@ public class SmartPlug extends SmartObject implements Programmable {
     private boolean programAction;
 
     public SmartPlug(String alias, String macId) {
-
+        setAlias(alias);
+        setMacId(macId);
     }
 
     public boolean getStatus() {
@@ -43,10 +44,10 @@ public class SmartPlug extends SmartObject implements Programmable {
 
     public boolean testObject() {
 
-    }
+    }   
 
     public boolean shutDownObject() {
-
+        
     }
 
     @Override

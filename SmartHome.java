@@ -4,7 +4,7 @@ public class SmartHome implements Comparable<SmartCamera> {
     private ArrayList<SmartObject> smartObjectList;
 
     public SmartHome() {
-        
+        smartObjectList = new ArrayList<>();
     }
 
     public ArrayList<SmartObject> getSmartObjectList() {
@@ -15,12 +15,18 @@ public class SmartHome implements Comparable<SmartCamera> {
         this.smartObjectList = smartObjectList;
     }
 
-    public boolean addSmartObject(SmartObject smartObject) {
-
+    public boolean addSmartObject(SmartObject smartObject) throws Exception {
+        if (smartObjectList.contains(smartObject)) {
+            throw new Exception("This smart object already exists");
+        }
+        return smartObjectList.add(smartObject);
     }
 
-    public boolean removeSmartObject(SmartObject smartObject) {
-
+    public boolean removeSmartObject(SmartObject smartObject) throws Exception {
+        if (!smartObjectList.contains(smartObject)) {
+            throw new Exception("This smart object is not found");
+        }
+        return smartObjectList.remove(smartObject);
     }
 
     public void controlLocation(boolean onCome) {

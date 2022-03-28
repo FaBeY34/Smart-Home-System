@@ -1,15 +1,15 @@
-public class SmartObject {
+public abstract class SmartObject {
     private String alias;
     private String macId;
     private String IP;
     private boolean connectionStatus;
 
     public SmartObject() {
-
+        
     }
 
-    public boolean isConnectionStatus() {
-        return connectionStatus;
+    public boolean getConnectionStatus() {
+        return this.connectionStatus;
     }
 
     public void setConnectionStatus(boolean connectionStatus) {
@@ -20,8 +20,8 @@ public class SmartObject {
         return IP;
     }
 
-    public void setIP(String iP) {
-        this.IP = iP;
+    public void setIP(String IP) {
+        this.IP = IP;
     }
 
     public String getAlias() {
@@ -40,27 +40,33 @@ public class SmartObject {
         this.macId = macId;
     }
 
-    public boolean connect(String ID) {
-
+    public boolean connect(String IP) {
+        this.IP = IP;
+        System.out.println(alias + " connection established");
+        return connectionStatus = true;
     }
+
     public boolean disconnect() {
 
+        return connectionStatus = false;
     }
-    
+
     public void SmartObjectToString() {
-        
+        System.out.println("This is SmartCamera device " + alias);
+        System.out.println("\tMacId: " + macId);
+        System.out.println("\tIP:" + IP);
     }
 
     public boolean controlConnection() {
-
+        if (!connectionStatus) {
+            System.out.println("This device is not connected. SmartCamera -> " + alias);
+            return false;
+        }
+        return true;
     }
 
-    public boolean testObject() {
-        
-    }
+    public abstract boolean testObject();
 
-    public boolean shutDownObject() {
+    public abstract boolean shutDownObject();
 
-    }
-    
 }
