@@ -35,19 +35,32 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
     }
 
     public void turnOnLight() {
-        if (controlConnection()) {
+        if (!getConnectionStatus()) {
             setHasLightTurned(true);
+            System.out.println(
+                    getClass().getSimpleName() + " - " + getAlias() + "is turned on now (Current time: " + programTime
+                            + ")");
+        } else {
+            System.out.println(
+                    getClass().getSimpleName() + " - " + getAlias() + " has been already turned on");
         }
     }
 
     public void turnOffLight() {
-        if (!controlConnection()) {
+        if (getConnectionStatus()) {
             setHasLightTurned(false);
+            System.out.println(getClass().getSimpleName() + " - " + getAlias() + "is turned off now (Current time: "
+                    + programTime + ")");
+        } else {
+            System.out.println(getClass().getSimpleName() + " - " + getAlias() + "has been already turned off");
         }
     }
 
     public boolean testObject() {
-        
+        SmartObjectToString();
+        turnOnLight();
+        turnOffLight();
+
     }
 
     public boolean shutDownObject() {
@@ -56,31 +69,26 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
 
     @Override
     public void onLeave() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onCome() {
-        // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void setTimer(int seconds) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void cancelTimer() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void runProgram() {
-        // TODO Auto-generated method stub
 
     }
 }

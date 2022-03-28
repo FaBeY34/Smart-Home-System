@@ -76,10 +76,10 @@ public class Test {
 
 	}
 
-	public static void sleepSystem() throws Exception{
-		System.out.println("System sleeping for " + (NUM_OF_SECONDS/1000) +" seconds");
+	public static void sleepSystem() throws Exception {
+		System.out.println("System sleeping for " + (NUM_OF_SECONDS / 1000) + " seconds");
 		Thread.sleep(NUM_OF_SECONDS);
 		System.out.println("System starting");
 	}
-
+	
 }

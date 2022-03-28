@@ -55,7 +55,6 @@ public class SmartHome implements Comparable<SmartCamera> {
 
     @Override
     public int compareTo(SmartCamera o) {
-        // TODO Auto-generated method stub
         return 0;
     }
 

@@ -5,7 +5,7 @@ public abstract class SmartObject {
     private boolean connectionStatus;
 
     public SmartObject() {
-        
+
     }
 
     public boolean getConnectionStatus() {
@@ -41,18 +41,17 @@ public abstract class SmartObject {
     }
 
     public boolean connect(String IP) {
-        this.IP = IP;
+        setIP(IP);
         System.out.println(alias + " connection established");
         return connectionStatus = true;
     }
 
     public boolean disconnect() {
-
         return connectionStatus = false;
     }
 
     public void SmartObjectToString() {
-        System.out.println("This is SmartCamera device " + alias);
+        System.out.println("This is " + this.getClass().getSimpleName() + " device " + alias);
         System.out.println("\tMacId: " + macId);
         System.out.println("\tIP:" + IP);
     }

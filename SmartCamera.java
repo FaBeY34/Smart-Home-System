@@ -49,19 +49,16 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
 
     @Override
     public boolean controlMotion(boolean hasMotion, boolean isDay) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public int compareTo(SmartCamera o) {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return super.toString();
     }
 }

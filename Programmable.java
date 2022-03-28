@@ -1,7 +1,7 @@
 public interface Programmable {
-    public void setTimer(int seconds);
+    void setTimer(int seconds);
 
-    public void cancelTimer();
+    void cancelTimer();
 
-    public void runProgram();
+    void runProgram();
 }

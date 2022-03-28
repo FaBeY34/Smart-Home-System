@@ -35,36 +35,63 @@ public class SmartPlug extends SmartObject implements Programmable {
     }
 
     public void turnOn() {
-
+        if (!getConnectionStatus()) {
+            setStatus(true);
+            System.out.println(
+                    this.getClass().getSimpleName() + " - " + getAlias() + " is turned on now (Current time: "
+                            + programTime
+                            + ")");
+        } else {
+            System.out.println(
+                    this.getClass().getSimpleName() + " - " + getAlias() + " has been already turned on");
+        }
     }
 
     public void turnOff() {
-
+        if (getConnectionStatus()) {
+            setStatus(false);
+            System.out
+                    .println(this.getClass().getSimpleName() + " - " + getAlias() + "is turned off now (Current time: "
+                            + programTime + ")");
+        } else {
+            System.out.println(this.getClass().getSimpleName() + " - " + getAlias() + "has been already turned off");
+        }
     }
 
     public boolean testObject() {
+        if (getConnectionStatus()) {
+            SmartObjectToString();
+            turnOn();
+            turnOff();
+            System.out.println("Test completed for " + this.getClass().getSimpleName());
+            return true;
+        } else {
+            return false;
+        }
 
-    }   
+    }
 
     public boolean shutDownObject() {
-        
+        if (getConnectionStatus()) {
+            SmartObjectToString();
+            turnOff();
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void setTimer(int seconds) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void cancelTimer() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void runProgram() {
-        // TODO Auto-generated method stub
 
     }
 }

@@ -1,5 +1,5 @@
 public interface LocationControl {
-    public void onLeave();
+    void onLeave();
 
-    public void onCome();
+    void onCome();
 }
