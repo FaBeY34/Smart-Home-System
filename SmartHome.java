@@ -19,6 +19,10 @@ public class SmartHome implements Comparable<SmartCamera> {
         if (smartObjectList.contains(smartObject)) {
             throw new Exception("This smart object already exists");
         }
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("Adding new SmartObject");
+        System.out.println("-------------------------------------------------------------------------- ");
         return smartObjectList.add(smartObject);
     }
 
@@ -30,7 +34,19 @@ public class SmartHome implements Comparable<SmartCamera> {
     }
 
     public void controlLocation(boolean onCome) {
-
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("LocationControl: " + ((onCome) ? "onCome" : "onLeave"));
+        System.out.println("-------------------------------------------------------------------------- ");
+        for (SmartObject smartObject : smartObjectList) {
+            if (smartObject instanceof LocationControl) {
+                if (onCome) {
+                    ((LocationControl) smartObject).onCome();
+                } else {
+                    ((LocationControl) smartObject).onLeave();
+                }
+            }
+        }
     }
 
     public void controlMotion(boolean hasMotion, boolean isDay) {

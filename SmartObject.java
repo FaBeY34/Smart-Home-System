@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 public abstract class SmartObject {
     private String alias;
     private String macId;
@@ -51,7 +53,7 @@ public abstract class SmartObject {
     }
 
     public void SmartObjectToString() {
-        System.out.println("This is " + this.getClass().getSimpleName() + " device " + alias);
+        System.out.println("This is " + getClass().getSimpleName() + " device " + alias);
         System.out.println("\tMacId: " + macId);
         System.out.println("\tIP:" + IP);
     }
@@ -68,4 +70,10 @@ public abstract class SmartObject {
 
     public abstract boolean shutDownObject();
 
+    public String currentTime() {
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int minute = Calendar.getInstance().get(Calendar.MINUTE);
+        int second = Calendar.getInstance().get(Calendar.SECOND);
+        return hour + ":" + minute + ":" + second;
+    }
 }

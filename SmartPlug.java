@@ -6,6 +6,7 @@ public class SmartPlug extends SmartObject implements Programmable {
     private boolean programAction;
 
     public SmartPlug(String alias, String macId) {
+        programTime = Calendar.getInstance();
         setAlias(alias);
         setMacId(macId);
     }
@@ -36,25 +37,26 @@ public class SmartPlug extends SmartObject implements Programmable {
 
     public void turnOn() {
         if (!getConnectionStatus()) {
-            setStatus(true);
+            setStatus(true);    
+            setProgramAction(false);
             System.out.println(
-                    this.getClass().getSimpleName() + " - " + getAlias() + " is turned on now (Current time: "
-                            + programTime
+                    getClass().getSimpleName() + " - " + getAlias() + " is turned on now (Current time: "
+                            + programTimeToString()
                             + ")");
         } else {
             System.out.println(
-                    this.getClass().getSimpleName() + " - " + getAlias() + " has been already turned on");
+                    getClass().getSimpleName() + " - " + getAlias() + " has been already turned on");
         }
     }
 
     public void turnOff() {
         if (getConnectionStatus()) {
             setStatus(false);
-            System.out
-                    .println(this.getClass().getSimpleName() + " - " + getAlias() + "is turned off now (Current time: "
-                            + programTime + ")");
+            setProgramAction(true);
+            System.out.println(getClass().getSimpleName() + " - " + getAlias() + "is turned off now (Current time: "
+                    + programTimeToString() + ")");
         } else {
-            System.out.println(this.getClass().getSimpleName() + " - " + getAlias() + "has been already turned off");
+            System.out.println(getClass().getSimpleName() + " - " + getAlias() + "has been already turned off");
         }
     }
 
@@ -63,11 +65,10 @@ public class SmartPlug extends SmartObject implements Programmable {
             SmartObjectToString();
             turnOn();
             turnOff();
-            System.out.println("Test completed for " + this.getClass().getSimpleName());
+            System.out.println("Test completed for " + getClass().getSimpleName());
             return true;
-        } else {
-            return false;
         }
+        return false;
 
     }
 
@@ -75,23 +76,50 @@ public class SmartPlug extends SmartObject implements Programmable {
         if (getConnectionStatus()) {
             SmartObjectToString();
             turnOff();
-        } else {
-            return false;
+            return true;
         }
+        return false;
     }
 
     @Override
     public void setTimer(int seconds) {
+        if (getConnectionStatus()) {
+            setProgramTime(programTime);
+            if (status) {
+                System.out.println(getClass().getSimpleName()+" - " + getAlias() + " will be turned off " + seconds
+                        + " seconds later! (Current time: " + programTimeToString() + ")");
+            } else {
+                System.out.println(getClass().getSimpleName()+" - " + getAlias() + " will be turned on " + seconds
+                        + " seconds later! (Current time: " + programTimeToString() + ")");
+            }
+            programTime.add(Calendar.SECOND, seconds);
 
+        }
     }
 
     @Override
     public void cancelTimer() {
-
+        if (getConnectionStatus()) {
+            programTime = null;
+        }
     }
 
     @Override
     public void runProgram() {
+        boolean isTimeProperly = (programTime != null);
+        if (isTimeProperly && getConnectionStatus() && programTimeToString().equals(currentTime())) {
+            System.out.println("RunProgram -> " + getClass().getSimpleName() + getAlias());
+            if (programAction) {
+                turnOn();
+            } else {
+                turnOff();
+            }
+            programTime = null;
+        }
+    }
 
+    public String programTimeToString() {
+        return programTime.get(Calendar.HOUR_OF_DAY) + ":" + programTime.get(Calendar.MINUTE) + ":"
+                + programTime.get(Calendar.SECOND);
     }
 }

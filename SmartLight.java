@@ -6,6 +6,7 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
     private boolean programAction;
 
     public SmartLight(String alias, String macId) {
+        programTime = Calendar.getInstance();
         setAlias(alias);
         setMacId(macId);
     }
@@ -37,8 +38,10 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
     public void turnOnLight() {
         if (!getConnectionStatus()) {
             setHasLightTurned(true);
+            setProgramAction(false);
             System.out.println(
-                    getClass().getSimpleName() + " - " + getAlias() + "is turned on now (Current time: " + programTime
+                    getClass().getSimpleName() + " - " + getAlias() + "is turned on now (Current time: "
+                            + programTimeToString()
                             + ")");
         } else {
             System.out.println(
@@ -49,46 +52,91 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
     public void turnOffLight() {
         if (getConnectionStatus()) {
             setHasLightTurned(false);
+            setProgramAction(true);
             System.out.println(getClass().getSimpleName() + " - " + getAlias() + "is turned off now (Current time: "
-                    + programTime + ")");
+                    + programTimeToString() + ")");
         } else {
             System.out.println(getClass().getSimpleName() + " - " + getAlias() + "has been already turned off");
         }
     }
 
     public boolean testObject() {
-        SmartObjectToString();
-        turnOnLight();
-        turnOffLight();
+        if (getConnectionStatus()) {
+            SmartObjectToString();
+            turnOnLight();
+            turnOffLight();
+            System.out.println("Test completed for " + getClass().getSimpleName());
+            return true;
+        }
+        return false;
 
     }
 
     public boolean shutDownObject() {
+        if (getConnectionStatus()) {
+            SmartObjectToString();
+            turnOffLight();
+            return true;
+        }
+        return false;
 
     }
 
     @Override
     public void onLeave() {
-
+        if (getConnectionStatus()) {
+            turnOffLight();
+            System.out.println("On Leave -> " + getClass().getSimpleName() + " - " + getAlias());
+        }
     }
 
     @Override
     public void onCome() {
-
+        if (!getConnectionStatus()) {
+            turnOnLight();
+            System.out.println("On Come -> " + getClass().getSimpleName() + " - " + getAlias());
+        }
     }
 
     @Override
     public void setTimer(int seconds) {
+        if (getConnectionStatus()) {
+            setProgramTime(programTime);
+            if (hasLightTurned) {
+                System.out.println(getClass().getSimpleName()+" - " + getAlias() + " will be turned off " + seconds
+                        + " seconds later! (Current time: " + programTimeToString() + ")");
+            } else {
+                System.out.println(getClass().getSimpleName()+" - " + getAlias() + " will be turned on " + seconds
+                        + " seconds later! (Current time: " + programTimeToString() + ")");
+            }
+            programTime.add(Calendar.SECOND, seconds);
 
+        }
     }
 
     @Override
     public void cancelTimer() {
-
+        if (getConnectionStatus()) {
+            programTime = null;
+        }
     }
 
     @Override
     public void runProgram() {
+        boolean isTimeProperly = (programTime != null);
+        if (isTimeProperly && getConnectionStatus() && programTimeToString().equals(currentTime())) {
+            System.out.println("RunProgram -> " + getClass().getSimpleName() + getAlias());
+            if (programAction) {
+                turnOnLight();
+            } else {
+                turnOffLight();
+            }
+            programTime = null;
+        }
 
     }
+    public String programTimeToString() {
+        return programTime.get(Calendar.HOUR_OF_DAY) + ":" + programTime.get(Calendar.MINUTE) + ":" + programTime.get(Calendar.SECOND);
+    }
+    
 }
