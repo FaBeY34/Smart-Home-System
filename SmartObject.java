@@ -53,7 +53,7 @@ public abstract class SmartObject {
     }
 
     public void SmartObjectToString() {
-        System.out.println("This is " + getClass().getSimpleName() + " device " + alias);
+        System.out.println("This is SmartObject device " + alias);
         System.out.println("\tMacId: " + macId);
         System.out.println("\tIP:" + IP);
     }

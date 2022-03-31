@@ -36,36 +36,40 @@ public class SmartPlug extends SmartObject implements Programmable {
     }
 
     public void turnOn() {
-        if (!getConnectionStatus()) {
-            setStatus(true);    
-            setProgramAction(false);
-            System.out.println(
-                    getClass().getSimpleName() + " - " + getAlias() + " is turned on now (Current time: "
-                            + programTimeToString()
-                            + ")");
-        } else {
-            System.out.println(
-                    getClass().getSimpleName() + " - " + getAlias() + " has been already turned on");
+        if (getConnectionStatus()) {
+            if (!status) {
+                setStatus(true);
+                setProgramAction(false);
+                System.out.println(
+                         "SmartPlug - " + getAlias() + " is turned on now (Current time: "
+                                + programTimeToString()
+                                + ")");
+            } else {
+                System.out.println(
+                         "SmartPlug - " + getAlias() + " has been already turned on");
+            }
         }
     }
 
     public void turnOff() {
         if (getConnectionStatus()) {
-            setStatus(false);
-            setProgramAction(true);
-            System.out.println(getClass().getSimpleName() + " - " + getAlias() + "is turned off now (Current time: "
-                    + programTimeToString() + ")");
-        } else {
-            System.out.println(getClass().getSimpleName() + " - " + getAlias() + "has been already turned off");
+            if (status) {
+                setStatus(false);
+                setProgramAction(true);
+                System.out.println("SmartPlug - " + getAlias() + "is turned off now (Current time: "
+                        + programTimeToString() + ")");
+            } else {
+                System.out.println("SmartPlug - " + getAlias() + "has been already turned off");
+            }
         }
     }
 
     public boolean testObject() {
-        if (getConnectionStatus()) {
+        if (getConnectionStatus() && !status) {
             SmartObjectToString();
             turnOn();
             turnOff();
-            System.out.println("Test completed for " + getClass().getSimpleName());
+            System.out.println("Test completed for SmartPlug");
             return true;
         }
         return false;
@@ -73,7 +77,7 @@ public class SmartPlug extends SmartObject implements Programmable {
     }
 
     public boolean shutDownObject() {
-        if (getConnectionStatus()) {
+        if (getConnectionStatus() && status) {
             SmartObjectToString();
             turnOff();
             return true;
@@ -86,10 +90,10 @@ public class SmartPlug extends SmartObject implements Programmable {
         if (getConnectionStatus()) {
             setProgramTime(programTime);
             if (status) {
-                System.out.println(getClass().getSimpleName()+" - " + getAlias() + " will be turned off " + seconds
+                System.out.println("SmartPlug - " + getAlias() + " will be turned off " + seconds
                         + " seconds later! (Current time: " + programTimeToString() + ")");
             } else {
-                System.out.println(getClass().getSimpleName()+" - " + getAlias() + " will be turned on " + seconds
+                System.out.println("SmartPlug - " + getAlias() + " will be turned on " + seconds
                         + " seconds later! (Current time: " + programTimeToString() + ")");
             }
             programTime.add(Calendar.SECOND, seconds);
@@ -108,7 +112,7 @@ public class SmartPlug extends SmartObject implements Programmable {
     public void runProgram() {
         boolean isTimeProperly = (programTime != null);
         if (isTimeProperly && getConnectionStatus() && programTimeToString().equals(currentTime())) {
-            System.out.println("RunProgram -> " + getClass().getSimpleName() + getAlias());
+            System.out.println("RunProgram -> SmartPlug " + getAlias());
             if (programAction) {
                 turnOn();
             } else {

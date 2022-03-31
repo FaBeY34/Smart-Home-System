@@ -23,13 +23,15 @@ public class SmartHome implements Comparable<SmartCamera> {
         System.out.println("--------------------------------------------------------------------------");
         System.out.println("Adding new SmartObject");
         System.out.println("-------------------------------------------------------------------------- ");
+        smartObject.connect(smartObject.getIP());
+        smartObject.testObject();
         return smartObjectList.add(smartObject);
     }
 
     public boolean removeSmartObject(SmartObject smartObject) throws Exception {
         if (!smartObjectList.contains(smartObject)) {
             throw new Exception("This smart object is not found");
-        }
+        }   
         return smartObjectList.remove(smartObject);
     }
 
