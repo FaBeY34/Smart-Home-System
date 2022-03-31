@@ -1,5 +1,3 @@
-import java.util.Calendar;
-
 public class Test {
 	public final static boolean onCome = true;
 	public final static boolean isDay = true;
