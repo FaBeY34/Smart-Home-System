@@ -63,7 +63,7 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
     public boolean testObject() {
         if (getConnectionStatus()) {
             SmartObjectToString();
-            System.out.println("Test is starting for Smart Camera day time ");
+            System.out.println("Test is starting for Smart Camera day time");
             recordOn(true);
             recordOff();
             System.out.println("Test is starting for Smart Camera night time");
@@ -78,7 +78,7 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
     public boolean shutDownObject() {
         if (getConnectionStatus()) {
             SmartObjectToString();
-            status = false;
+            setStatus(false);
             return true;
         }
         return false;
@@ -86,25 +86,21 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
 
     @Override
     public boolean controlMotion(boolean hasMotion, boolean isDay) {
-        if (getConnectionStatus()) {
-            if (hasMotion) {
-                System.out.println("Motion detected");
+        if (hasMotion) {
+            System.out.println("Motion detected");
 
-                if (status) {
-
-                    if (isDay) {
-                        recordOn(isDay);
-                    } else {
-                        status = nightVision;
-                    }
+            if (status) {
+                if (isDay) {
+                    recordOn(isDay);
+                } else {
+                    setStatus(nightVision);
                 }
-                return true;
-            } else {
-                System.out.println("Motion not detected");
-                return false;
             }
+            return true;
+        } else {
+            System.out.println("Motion not detected");
+            return false;
         }
-        return false;
     }
 
     @Override
