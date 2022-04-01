@@ -89,13 +89,12 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
         if (hasMotion) {
             System.out.println("Motion detected");
 
-            if (status) {
-                if (isDay) {
-                    recordOn(isDay);
-                } else {
-                    setStatus(nightVision);
-                }
+            if (isDay) {
+                recordOn(isDay);
+            } else {
+                setStatus(nightVision);
             }
+
             return true;
         } else {
             System.out.println("Motion not detected");

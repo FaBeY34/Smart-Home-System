@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SmartHome implements Comparable<SmartCamera> {
     private ArrayList<SmartObject> smartObjectList;
@@ -23,6 +24,7 @@ public class SmartHome implements Comparable<SmartCamera> {
         System.out.println("--------------------------------------------------------------------------");
         System.out.println("Adding new SmartObject");
         System.out.println("--------------------------------------------------------------------------");
+        
         smartObjectList.add(smartObject);
         smartObject.connect("10.0.0." + (100 + smartObjectList.indexOf(smartObject)));
         System.out.println("Test is starting for " + smartObject.getClass().getSimpleName());
@@ -43,6 +45,7 @@ public class SmartHome implements Comparable<SmartCamera> {
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("LocationControl: " + ((onCome) ? "onCome" : "onLeave"));
         System.out.println("--------------------------------------------------------------------------");
+        
         for (SmartObject smartObject : smartObjectList) {
             if (smartObject instanceof LocationControl) {
                 if (onCome) {
@@ -98,14 +101,13 @@ public class SmartHome implements Comparable<SmartCamera> {
     }
 
     public void controlTimerRandomly() {
-        int randomNumber = (int) (Math.random() * 3);
-
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("Programmable: Timer = 5 or 10 seconds randomly");
         System.out.println("-----------------------------------------------------------------------");
 
         for (SmartObject smartObject : smartObjectList) {
+            int randomNumber = (int) (Math.random() * 3);
             if (smartObject instanceof Programmable) {
                 if (randomNumber != 0) {
                     ((Programmable) smartObject).setTimer(randomNumber * 5);
@@ -122,31 +124,25 @@ public class SmartHome implements Comparable<SmartCamera> {
         System.out.println("Sort Smart Cameras");
         System.out.println("--------------------------------------------------------------------------");
 
-        ArrayList<SmartCamera> smartCameras = new ArrayList<>();
+        ArrayList<SmartCamera> smartCameraList = new ArrayList<>();
 
         for (SmartObject smartObject : smartObjectList) {
             if (smartObject instanceof SmartCamera && smartObject instanceof Comparable) {
-                smartCameras.add((SmartCamera) smartObject);
-            }
+                smartCameraList.add((SmartCamera) smartObject);
+            }   
         }
-        SmartCamera maxBatteryLife = smartCameras.get(0);
-        // for (int i = 1; i < smartCameras.size(); i++) {
-        // if (Integer.compare(maxBatteryLife.getBatteryLife(),
-        // smartCameras.get(i).getBatteryLife()) == -1) {
-        // maxBatteryLife = smartCameras.get(i);
-        // }
-        // }
-        for (int i = 1; i < smartCameras.size(); i++) {
-            if (maxBatteryLife.compareTo(smartCameras.get(i)) == -1) {
-                maxBatteryLife = smartCameras.get(i);
-            }
+
+        Object[] sortedSmartCameras = smartCameraList.toArray();
+        Arrays.sort(sortedSmartCameras);
+
+        for (Object sortObject : sortedSmartCameras) {
+            System.out.println(((SmartCamera)sortObject).toString());
         }
     }
 
     @Override
     public int compareTo(SmartCamera smartCamera) {
         return 0;
-
     }
 
 }
