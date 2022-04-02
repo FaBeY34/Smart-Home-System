@@ -1,3 +1,8 @@
+/*
+In this program we implemented a simple smart home system.  
+Name and Surname: Feyzullah Asıllıoğlu
+Student ID: 150121021
+*/
 public class Test {
 	public final static boolean onCome = true;
 	public final static boolean isDay = true;
