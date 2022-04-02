@@ -94,8 +94,8 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
             } else {
                 setStatus(nightVision);
             }
-
             return true;
+
         } else {
             System.out.println("Motion not detected");
             return false;
@@ -107,12 +107,9 @@ public class SmartCamera extends SmartObject implements MotionControl, Comparabl
         return Integer.compare(this.batteryLife, smartCamera.batteryLife);
     }
 
-    public String statusToString() {
-        return status ? "is recording" : "is not recording";
-    }
-
     @Override
     public String toString() {
-        return "SmartCamera -> " + getAlias() + "'s battery life is " + batteryLife + " status " + statusToString();
+        return "SmartCamera -> " + getAlias() + "'s battery life is " + batteryLife + " status "
+                + (status ? "is recording" : "is not recording");
     }
 }

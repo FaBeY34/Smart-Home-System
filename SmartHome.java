@@ -25,12 +25,11 @@ public class SmartHome implements Comparable<SmartCamera> {
         System.out.println("Adding new SmartObject");
         System.out.println("--------------------------------------------------------------------------");
         
-        smartObjectList.add(smartObject);
-        smartObject.connect("10.0.0." + (100 + smartObjectList.indexOf(smartObject)));
+        smartObject.connect("10.0.0." + (100 + smartObjectList.size()));
         System.out.println("Test is starting for " + smartObject.getClass().getSimpleName());
         smartObject.testObject();
         System.out.println();
-        return true;
+        return smartObjectList.add(smartObject);
     }
 
     public boolean removeSmartObject(SmartObject smartObject) throws Exception {

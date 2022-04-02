@@ -6,9 +6,9 @@ public abstract class SmartObject {
     private String IP;
     private boolean connectionStatus;
 
-    public SmartObject() {
+    // public SmartObject() {
 
-    }
+    // }
 
     public boolean getConnectionStatus() {
         return this.connectionStatus;

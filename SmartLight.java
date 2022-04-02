@@ -73,7 +73,6 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
             return true;
         }
         return false;
-
     }
 
     public boolean shutDownObject() {
@@ -83,7 +82,6 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
             return true;
         }
         return false;
-
     }
 
     @Override
@@ -129,8 +127,7 @@ public class SmartLight extends SmartObject implements LocationControl, Programm
 
     @Override
     public void runProgram() {
-        boolean isTimeProperly = (programTime != null);
-        if (isTimeProperly && getConnectionStatus() && programTimeToString().equals(currentTime())) {
+        if ((programTime != null) && getConnectionStatus() && programTimeToString().equals(currentTime())) {
             System.out.println("runProgram -> SmartLight " + getAlias());
             if (programAction) {
                 turnOnLight();
